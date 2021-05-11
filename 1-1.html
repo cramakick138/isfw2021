@@ -12,6 +12,10 @@
     <script>
         function button1Pressed() {
             execSelect();
+            let count = function (mgs1) {
+                console.log(mgs1);
+            };
+            setInterval(count, 3000, "hello");
         }
 
         async function execSelect() {
@@ -22,11 +26,19 @@
             html = html + '<ul>';
             for (var i = 0; i < objects.length; i++) {
                 var object = objects[i];
-                html = html + '<li>' + object.tweet + '</li>';
+                html = html + '<li>' + object.name + ": " + object.tweet + ": " + object.time + '</li>';
             }
             html = html + '</ul>';
             document.getElementById('result').innerHTML = html;
+            let count = function (mgs1) {
+                console.log(mgs1);
+            };
+            setInterval(button1Pressed, 3000, "hello");
         }
+        let count = function (mgs1) {
+            console.log(mgs1);
+        };
+        setInterval(button1Pressed, 3000, "hello");
     </script>
 
 </head>
