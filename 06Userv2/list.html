@@ -26,10 +26,15 @@
                 html = html + '<td>' + object.id + '</td>';
                 html = html + '<td>' + object.name + '</td>';
                 html = html + '<td>' + '<a href="update.html?userid=' + object.id + '">変更</a>' + '</td>';
+                html = html + '<td>' + '<a href="delete.html?userid=' + object.id + '">削除</a>' + '</td>';
                 html = html + '</tr>';
             }
             html = html + '</table>';
             document.getElementById('result').innerHTML = html;
+        }
+        function init() {
+            var id = sessionStorage.getItem('name');
+            document.getElementById
         }
     </script>
 
