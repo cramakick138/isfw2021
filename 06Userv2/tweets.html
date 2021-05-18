@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <script type="text/javascript" src="../jquery.min.js"></script>
+    <script type="text/javascript" src="../settings.js"></script>
+    <script type="text/javascript" src="../osql.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            execSelect();
+            init();
+        });
+
+        async function execSelect() {
+            var sql = 'select * from Tweets order by time asc limit 5';
+            var objects = await osql.connect(sql);
+            console.log(objects);
+            var html = '';
+            html = html + '<table border="1">';
+            for (var i = 0; i < objects.length; i++) {
+                html = html + '<tr>';
+                var object = objects[i];
+                html = html + '<td>' + object.id + '</td>';
+                html = html + '<td>' + object.name + '</td>';
+                html = html + '<td>' + object.tweet + '</td>';
+                html = html + '<td>' + object.time + '</td>';
+                html = html + '</tr>';
+            }
+            html = html + '</table>';
+            document.getElementById('result').innerHTML = html;
+        }
+        async function init() {
+            var userid = osql.getParam('userid');
+            var sql = `select * from Users where id="${userid}";`;
+            var objects = await osql.connect(sql);
+            if (objects.length <= 0) {
+                document.getElementById('idresult').innerHTML = 'not found';
+                return;
+            }
+            var user = objects[0];
+            document.getElementById('tf1').value = user.name;
+        }
+
+        function button2Pressed() {
+            execTweets();
+        }
+
+        async function execTweets() {
+            var username = document.getElementById('tf1').value;
+            var tweets = document.getElementById('tf2').value;
+
+            var sql = 'insert into Tweets(name,tweet) value ("' + username + '","' + tweets + '");';
+            var objects = await osql.connect(sql);
+
+            document.getElementById('result').innerHTML = 'OK';
+            execSelect();
+        }
+    </script>
+
+</head>
+
+<body>
+    <h1>Tweets</h1>
+    username:<input id="tf1" value="" type="textfield" disabled>
+    <br>
+    tweets:<input id="tf2" value="" type="textfield">
+    <button onclick="button2Pressed()">登録</button>
+    <br>
+    <p id="result">xxxx</p>
+    <p id="idresult"></p>
+</body>
+
+</html>
